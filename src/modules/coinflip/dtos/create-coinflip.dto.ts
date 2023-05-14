@@ -23,4 +23,9 @@ export class CreateCoinflipDto {
     @MaxLength(5)
     @IsNotEmpty()
     status: string;
+
+    @IsString()
+    @MaxLength(5)
+    @IsNotEmpty()
+    creatorChoose: string;
   }

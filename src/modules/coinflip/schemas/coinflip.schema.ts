@@ -27,6 +27,12 @@ export class Coinflip {
   status: string;
 
   @Prop()
+  creatorChoose: string;
+
+  @Prop()
+  result: string;
+
+  @Prop()
   winner: string;
 }
 
