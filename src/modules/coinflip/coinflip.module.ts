@@ -7,7 +7,11 @@ import { CoinflipService } from './coinflip.service';
 import { Coinflip, CoinflipSchema } from './schemas/coinflip.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Coinflip.name, schema: CoinflipSchema }])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: Coinflip.name, schema: CoinflipSchema },
+    ]),
+  ],
   controllers: [CoinflipController],
   providers: [CoinflipService],
 })

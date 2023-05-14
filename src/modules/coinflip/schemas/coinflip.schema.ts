@@ -8,7 +8,7 @@ export class Coinflip {
   @Prop({ required: true }) // TODOS: Add type: mongoose.Schema.Types.ObjectId, ref: 'User'
   createdBy: string;
 
-  @Prop()  // TODOS: Add type: mongoose.Schema.Types.ObjectId, ref: 'User'
+  @Prop() // TODOS: Add type: mongoose.Schema.Types.ObjectId, ref: 'User'
   acceptedBy: string;
 
   @Prop({ required: true })

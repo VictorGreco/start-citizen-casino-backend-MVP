@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Put } from '@nestjs/common';
 import { CoinflipService } from './coinflip.service';
 import { CreateCoinflipDto } from './dtos/create-coinflip.dto';
 
@@ -13,17 +13,21 @@ export class CoinflipController {
 
   @Get(':id')
   async getCoinflipById(@Param('id') coinflipId: string): Promise<any> {
-    return this.coinflipService.getCoinflipById(coinflipId);
+    return await this.coinflipService.getCoinflipById(coinflipId);
   }
 
   @Post()
-  async createCoinflip(@Body() createCoinflip: CreateCoinflipDto): Promise<any> {
-    return this.coinflipService.createCoinflip(createCoinflip);
+  async createCoinflip(
+    @Body() createCoinflip: CreateCoinflipDto,
+  ): Promise<any> {
+    return await this.coinflipService.createCoinflip(createCoinflip);
   }
 
-  @Post(':id/resolve')
-  async resolveCoinflip(@Param('id') coinflipId: string, @Body() rivalId: string): Promise<any> {
-
-    return this.coinflipService.resolveCoinflip(coinflipId, rivalId);
+  @Put(':id/resolve')
+  async resolveCoinflip(
+    @Param('id') coinflipId: string,
+    @Body() { acceptedBy }: any,
+  ): Promise<any> {
+    return await this.coinflipService.resolveCoinflip(coinflipId, acceptedBy);
   }
 }

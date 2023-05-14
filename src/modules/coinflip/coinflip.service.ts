@@ -6,7 +6,9 @@ import { CreateCoinflipDto } from './dtos/create-coinflip.dto';
 
 @Injectable()
 export class CoinflipService {
-  constructor(@InjectModel(Coinflip.name) private readonly coinflipModel: Model<Coinflip>) {}
+  constructor(
+    @InjectModel(Coinflip.name) private readonly coinflipModel: Model<Coinflip>,
+  ) {}
 
   // BASIC USER CRUD
   async getAllCoinflips(): Promise<Coinflip[]> {
@@ -19,40 +21,58 @@ export class CoinflipService {
 
   async createCoinflip(coinflip: CreateCoinflipDto): Promise<Coinflip> {
     const newUser = new this.coinflipModel({
-      ...coinflip,    
-      acceptedBy: null,    
+      ...coinflip,
+      createdAt: new Date(),
+      acceptedBy: null,
       endedAt: null,
-      status: "OPEN",
+      status: 'STARTED',
       result: null,
-      winner: null
+      winner: null,
     });
     return newUser.save();
   }
 
-  async updateCoinflip(coinflipId: string, updatedCoinflip: Coinflip): Promise<Coinflip> {
-    return this.coinflipModel.findByIdAndUpdate(coinflipId, updatedCoinflip, { new: true });
+  async updateCoinflip(
+    coinflipId: string,
+    updatedCoinflip: Coinflip,
+  ): Promise<Coinflip> {
+    return this.coinflipModel.findByIdAndUpdate(coinflipId, updatedCoinflip, {
+      new: true,
+    });
   }
 
-  async resolveCoinflip(coinflipId: string, rivalId: string): Promise<Coinflip> {
+  async resolveCoinflip(
+    coinflipId: string,
+    acceptedBy: string,
+  ): Promise<Coinflip> {
     const coinflip = await this.getCoinflipById(coinflipId);
-    const endDate = new Date();
-    const status = "CLOSED";
-    const result = await this.flipCoin();
-    const winner = coinflip.creatorChoose === result ? coinflip.createdBy : rivalId;
+    const endedAt = new Date();
+    const status = 'CLOSED';
+    const result = this.flipCoin();
+    const winner =
+      coinflip.creatorChoose === result ? coinflip.createdBy : acceptedBy;
 
-    const updatedCoinflip = {
-      ...coinflip,
-      endDate,
+    console.log(coinflip.creatorChoose);
+    console.log(result);
+    console.log(coinflip.creatorChoose === result);
+
+    const partial = {
+      acceptedBy,
+      endedAt,
       status,
       result,
-      winner
-    }
+      winner,
+    };
 
-    return this.coinflipModel.findByIdAndUpdate(coinflipId, updatedCoinflip, { new: true });
+    const updatedCoinflip = Object.assign(coinflip, partial);
+
+    return this.coinflipModel.findByIdAndUpdate(coinflipId, updatedCoinflip, {
+      new: true,
+    });
   }
 
   // SPECIFIC CRUD ACTIONS
-  async flipCoin(): Promise<"Heads" | "Tails"> {
+  flipCoin(): string {
     const result = Math.random() < 0.5 ? 'Heads' : 'Tails';
     return result;
   }
