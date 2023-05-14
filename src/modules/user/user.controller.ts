@@ -10,17 +10,17 @@ export class UserController {
   // BASIC CRUD ACTIONS
   @Get()
   async getAllUsers(): Promise<User[]> {
-    return this.userService.getAllUsers();
+    return await this.userService.getAllUsers();
   }
 
   @Get(':id')
   async getUserById(@Param('id') userId: string): Promise<any> {
-    return this.userService.getUserById(userId);
+    return await this.userService.getUserById(userId);
   }
 
   @Post()
   async createUser(@Body() createUser: CreateUserDto): Promise<any> {
-    return this.userService.createUser(createUser);
+    return await this.userService.createUser(createUser);
   }
 
   // @Put(':id')
@@ -30,7 +30,7 @@ export class UserController {
 
   @Delete(':id')
   async deleteUser(@Param('id') userId: string): Promise<any> {
-    return this.userService.deleteUser(userId);
+    return await this.userService.deleteUser(userId);
   }
 
   // SPECIFIC UPDATE ACTIONS
@@ -40,7 +40,7 @@ export class UserController {
     @Param('id') userId: string,
     @Body() password: string,
   ): Promise<any> {
-    return this.userService.updateUserPassword(userId, password);
+    return await this.userService.updateUserPassword(userId, password);
   }
 
   @Put(':id/coins')
@@ -48,7 +48,7 @@ export class UserController {
     @Param('id') userId: string,
     @Body() coins: number,
   ): Promise<any> {
-    return this.userService.updateUserCoins(userId, coins);
+    return await this.userService.updateUserCoins(userId, coins);
   }
 
   @Put(':id/tokens')
@@ -56,11 +56,11 @@ export class UserController {
     @Param('id') userId: string,
     @Body() tokens: number,
   ): Promise<any> {
-    return this.userService.updateUserTokens(userId, tokens);
+    return await this.userService.updateUserTokens(userId, tokens);
   }
 
   @Put(':id/verify')
   async updateUserVerification(@Param('id') userId: string): Promise<any> {
-    return this.userService.updateUserVerification(userId);
+    return await this.userService.updateUserVerification(userId);
   }
 }
