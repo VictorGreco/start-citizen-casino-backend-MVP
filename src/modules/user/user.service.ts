@@ -6,7 +6,9 @@ import { CreateUserDto } from './dtos/create-user.dto';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private readonly userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<User>
+  ) {}
 
   // BASIC USER CRUD
   async getAllUsers(): Promise<User[]> {
@@ -22,7 +24,7 @@ export class UserService {
       ...user,
       isVerified: false,
       tokens: 0,
-      coins: 0
+      coins: 0,
     });
     return newUser.save();
   }
@@ -38,37 +40,29 @@ export class UserService {
   //SPECIFIC UPDATE ACTIONS
   async updateUserPassword(userId: string, password: string): Promise<User> {
     const user = await this.getUserById(userId);
+    const updatedUser = Object.assign(user, password);
 
-    return this.userModel.findByIdAndUpdate(userId, {
-      ...user,
-      password
-    }, { new: true });
+    return this.userModel.findByIdAndUpdate(userId, updatedUser, { new: true });
   }
 
   async updateUserTokens(userId: string, tokens: number): Promise<User> {
     const user = await this.getUserById(userId);
+    const updatedUser = Object.assign(user, tokens);
 
-    return this.userModel.findByIdAndUpdate(userId, {
-      ...user,
-      tokens
-    }, { new: true });
+    return this.userModel.findByIdAndUpdate(userId, updatedUser, { new: true });
   }
 
   async updateUserCoins(userId: string, coins: number): Promise<User> {
     const user = await this.getUserById(userId);
+    const updatedUser = Object.assign(user, coins);
 
-    return this.userModel.findByIdAndUpdate(userId, {
-      ...user,
-      coins
-    }, { new: true });
+    return this.userModel.findByIdAndUpdate(userId, updatedUser, { new: true });
   }
 
   async updateUserVerification(userId: string): Promise<User> {
     const user = await this.getUserById(userId);
+    const updatedUser = Object.assign(user, { isVerified: true });
 
-    return this.userModel.findByIdAndUpdate(userId, {
-      ...user,
-      isVerified: true
-    }, { new: true });
+    return this.userModel.findByIdAndUpdate(userId, updatedUser, { new: true });
   }
 }

@@ -35,19 +35,27 @@ export class UserController {
 
   // SPECIFIC UPDATE ACTIONS
 
-
   @Put(':id/password')
-  async updateUserPassword(@Param('id') userId: string, @Body() password: string): Promise<any> {
+  async updateUserPassword(
+    @Param('id') userId: string,
+    @Body() password: string,
+  ): Promise<any> {
     return this.userService.updateUserPassword(userId, password);
   }
 
   @Put(':id/coins')
-  async updateUserCoins(@Param('id') userId: string, @Body() coins: number): Promise<any> {
+  async updateUserCoins(
+    @Param('id') userId: string,
+    @Body() coins: number,
+  ): Promise<any> {
     return this.userService.updateUserCoins(userId, coins);
   }
 
   @Put(':id/tokens')
-  async updateUserTokens(@Param('id') userId: string, @Body() tokens: number): Promise<any> {
+  async updateUserTokens(
+    @Param('id') userId: string,
+    @Body() tokens: number,
+  ): Promise<any> {
     return this.userService.updateUserTokens(userId, tokens);
   }
 
