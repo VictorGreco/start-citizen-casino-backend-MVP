@@ -8,10 +8,10 @@ import * as csurf from 'csurf';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule,  { cors: true });
 
-  app.use(csurf());
+  //app.use(csurf());
   app.use(helmet());
 
-  app.enableCors();
+  //app.enableCors();
 
   await app.listen(3000);
 }
